@@ -72,8 +72,8 @@ Client (React SPA) → Express REST API → SQLite Database (Prisma ORM)
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/logistics-maintenance-system.git
-   cd logistics-maintenance-system
+   git clone https://github.com/anas98slayer/Logistic-Maintenance-and-Requisition.git
+   cd Logistic-Maintenance-and-Requisition
    ```
 
 2. **Install frontend dependencies**
@@ -115,8 +115,8 @@ The seed script creates the following users:
 
 | Role | Email | Password |
 |------|-------|----------|
-| Admin | `admin@logistic.com` | `admin123` |
-| Technician | `tech@logistic.com` | `tech123` |
+| Admin | `admin@fleetpro.com` | `admin123` |
+| Technician | `tech@fleetpro.com` | `tech123` |
 
 ### Building for Production
 
