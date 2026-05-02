@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int                  @id @default(autoincrement())
+  email         String               @unique
+  name          String?
+  password      String
+  role          String               @default("TECHNICIAN")
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+  createdTasks  MaintenanceRequest[] @relation("CreatedBy")
+  assignedTasks MaintenanceRequest[] @relation("AssignedTo")
+  requisitions  Requisition[]
+}
+
+model Equipment {
+  id              String               @id
+  name            String
+  type            String
+  location        String
+  status          String               @default("Operational")
+  lastMaintenance DateTime?
+  nextMaintenance DateTime?
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+  maintenanceLogs MaintenanceRequest[]
+}
+
+model MaintenanceRequest {
+  id           String    @id
+  equipmentId  String
+  type         String
+  priority     String
+  status       String    @default("Pending")
+  assignedToId Int?
+  createdById  Int?
+  createdDate  DateTime  @default(now())
+  dueDate      DateTime
+  description  String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  createdBy    User?     @relation("CreatedBy", fields: [createdById], references: [id])
+  assignedTo   User?     @relation("AssignedTo", fields: [assignedToId], references: [id])
+  equipment    Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+}
+
+model Requisition {
+  id            String   @id
+  item          String
+  category      String
+  quantity      Int
+  unit          String
+  status        String   @default("Pending")
+  requestedById Int
+  requestDate   DateTime @default(now())
+  estimatedCost String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  requestedBy   User     @relation(fields: [requestedById], references: [id])
+}
+
+model InventoryItem {
+  id            String    @id
+  name          String
+  category      String
+  quantity      Int
+  unit          String
+  minStock      Int
+  location      String
+  supplier      String
+  lastRestocked DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
