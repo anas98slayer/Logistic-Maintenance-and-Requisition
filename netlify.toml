@@ -3,7 +3,7 @@
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "20"
+  NODE_VERSION = "18"
   VITE_API_URL = "https://fleetpro-h5sv.onrender.com/api"
 
 [[redirects]]
